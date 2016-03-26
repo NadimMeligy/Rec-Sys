@@ -1,0 +1,100 @@
+
+<head>
+  <title>rec-sys</title>
+</head>
+
+<body>
+	<div class= "container">
+	<header>
+		{{> loginButtons}}
+		<br>
+
+		{{#if isUser}}
+		<form action="">
+			<label class = "all-movies">
+  				<input type="radio" name="options" value="Unrated Movies" checked ="checked"> All Movies&nbsp;&nbsp;
+  			</label>
+			<label class="rated-movies">
+				<input type="radio" name="options" value="Rated Movies"> Rated Movies&nbsp;&nbsp;
+  			</label>
+  			<label class = "unrated-movies">
+  				<input type="radio" name="options" value="Unrated Movies"> Unrated Movies&nbsp;&nbsp;
+  			</label>
+  			<label class = "popular-movies">
+  				<input type="radio" name="options" value="Popular Movies" > Popular Movies&nbsp;&nbsp;
+  			</label>
+  			<label class = "genre-movies">
+  				<input type="radio" name="options" value="Genre Movies" > Movies Recommended based on genre&nbsp;&nbsp;
+  			</label>
+  			<br>
+  			<label class = "item-item-movies">
+  				<input type="radio" name="options" value="ItemItem Movies">Recommend based on:
+  			</label>
+		</form>
+		{{#if itemitemMoviesnr}}
+  			<form class = recommend>
+  				<input type = "text" name="title" placeholder="Movie title" id= "rec-title">&nbsp;&nbsp;
+  				<input type= "submit" value="recommend">
+  			</form>
+  		{{/if}}
+  		{{#if itemitemMovies}}
+  			<form class = recommend>
+  				<input type = "text" name="title" placeholder="Movie title" id= "rec-title">&nbsp;&nbsp;
+  				<input type= "submit" value="recommend">
+  			</form>
+  		{{/if}}
+		<br>
+		{{/if}}
+		<form class="new-movie">
+			{{#if isAdmin}}
+				<input type="text" name ="title" placeholder = "New Movie" autocomplete="off">
+				<input type = "submit" value="Add"><br>
+				<input type="checkbox" class="genre" name="Comedy" id="c">Comedy
+				<input type="checkbox" class="genre" name="Action" id="a">Action
+				<input type="checkbox" class="genre" name="Thriller" id="t">Thriller
+				<input type="checkbox" class="genre" name="Horror" id="h">Horror
+				<input type="checkbox" class="genre" name="Drama" id="d">Drama
+				<input type="checkbox" class="genre" name="Romance" id="r">Romance
+				<input type="checkbox" class="genre" name="Animation" id="an">Animation
+				<input type="checkbox" class="genre" name="Sci-Fi" id="sf">Sci-Fi
+			{{/if}}
+		</form>
+		{{#if isAdmin}}
+			<br>
+		{{/if}}
+	</header>
+
+	<ul>
+		{{#each movies}}
+		{{> movie}}
+		{{/each}}
+	</ul>
+	</div>
+</body>
+
+<template name="movie">
+	<li><b>
+		<span class="text" style="font-size:20px" >{{title}}</span>
+		</b>
+		<form class="rate"> 
+			{{#if isAdmin}}
+				<button class="delete">&times;</button>
+			{{/if}}
+			{{#if isUser}}
+			{{#if rated}}
+				Rated: 
+				<span class="text">{{rate}}</span>
+				<button class="deleteRate">Remove Rating</button>
+				,
+			{{else}}
+				<input type="submit" value="Rate">
+				Rate:  1
+				<input type="range" name ="rating" min="1" max="5">
+				5
+			{{/if}}
+			{{/if}}
+			{{#if isAdmin}}&nbsp;&nbsp;&nbsp;{{/if}}Average Rating: &nbsp; {{averageRating}}
+		</form>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Genre: {{getGenre}}
+	</li>
+</template>
